@@ -173,14 +173,14 @@ public class BeatBox {
 
     public class MySendListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
-            String patch = new String("CheckBox.ser");
+            File patch = new File("CheckBox.ser");
             saveBeats(patch);
 
         }
     }
 
-    private void saveBeats(String p){
-        String path = p;
+    private void saveBeats(File p){
+        File path = p;
         boolean[] checkBoxState = new boolean[256];
 
 
@@ -192,7 +192,7 @@ public class BeatBox {
         }
 
         try {
-            FileOutputStream fileStream = new FileOutputStream(new File(path));
+            FileOutputStream fileStream = new FileOutputStream(path);
             ObjectOutputStream os = new ObjectOutputStream(fileStream);
             os.writeObject(checkBoxState);
         }catch (Exception ex) {
@@ -204,8 +204,10 @@ public class BeatBox {
     private class SaveCfgListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String patch = new String("CheckBox1.ser");
-            saveBeats(patch);
+            JFileChooser fileSave = new JFileChooser();
+            fileSave.showDialog(theFrame,"Save");
+//            String patch = new String("CheckBox1.ser");
+            saveBeats(fileSave.getSelectedFile());
         }
     }
 
@@ -233,7 +235,7 @@ public class BeatBox {
         public void actionPerformed(ActionEvent a) {
             boolean[] checkBoxState = null;
             try {
-                FileInputStream fileIn = new FileInputStream(new File("CheckBox.ser"));
+                FileInputStream fileIn = new FileInputStream(new File("CheckBox1.ser"));
                 ObjectInputStream is = new ObjectInputStream(fileIn);
                 checkBoxState = (boolean[]) is.readObject();
             }catch (Exception ex){
