@@ -206,7 +206,6 @@ public class BeatBox {
         public void actionPerformed(ActionEvent e) {
             JFileChooser fileSave = new JFileChooser();
             fileSave.showDialog(theFrame,"Save");
-//            String patch = new String("CheckBox1.ser");
             saveBeats(fileSave.getSelectedFile());
         }
     }
@@ -235,7 +234,7 @@ public class BeatBox {
         public void actionPerformed(ActionEvent a) {
             boolean[] checkBoxState = null;
             try {
-                FileInputStream fileIn = new FileInputStream(new File("CheckBox1.ser"));
+                FileInputStream fileIn = new FileInputStream(new File("CheckBox.ser"));
                 ObjectInputStream is = new ObjectInputStream(fileIn);
                 checkBoxState = (boolean[]) is.readObject();
             }catch (Exception ex){
