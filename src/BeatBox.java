@@ -200,6 +200,30 @@ public class BeatBox {
         }
     }
 
+    private void loadBeat(File p) {
+        File patch = p;
+        boolean[] checkBoxState = null;
+        try {
+            FileInputStream fileIn = new FileInputStream(patch);
+            ObjectInputStream is = new ObjectInputStream(fileIn);
+            checkBoxState = (boolean[]) is.readObject();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        for(int i = 0; i < 256; i++){
+            JCheckBox check = (JCheckBox) checkBoxeList.get(i);
+            if(checkBoxState[i]){
+                check.setSelected(true);
+            }else {
+                check.setSelected(false);
+            }
+        }
+
+        sequencer.stop();
+        buildTrackAndStart();
+
+    }
+
 
     private class SaveCfgListener implements ActionListener {
         @Override
@@ -213,6 +237,9 @@ public class BeatBox {
     private class LoadCfgListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+            JFileChooser fileLoad = new JFileChooser();
+            fileLoad.showDialog(theFrame,"Open");
+            loadBeat(fileLoad.getSelectedFile());
 
         }
     }
@@ -232,25 +259,9 @@ public class BeatBox {
     public class MyReadInListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent a) {
-            boolean[] checkBoxState = null;
-            try {
-                FileInputStream fileIn = new FileInputStream(new File("CheckBox.ser"));
-                ObjectInputStream is = new ObjectInputStream(fileIn);
-                checkBoxState = (boolean[]) is.readObject();
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-            for(int i = 0; i < 256; i++){
-                JCheckBox check = (JCheckBox) checkBoxeList.get(i);
-                if(checkBoxState[i]){
-                    check.setSelected(true);
-                }else {
-                    check.setSelected(false);
-                }
-        }
+            File patch = new File("CheckBox.ser");
+            loadBeat(patch);
 
-        sequencer.stop();
-        buildTrackAndStart();
         }
 
     }
