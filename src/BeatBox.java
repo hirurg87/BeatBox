@@ -12,6 +12,7 @@ public class BeatBox {
     Sequence sequence;
     Track track;
     JFrame theFrame;
+    String currentDirectoryFolderPath = "D:\\project\\java\\BeatBox";
 
     String[] instrumentNames = {"Bass Drum", "Closed Hi-Hat", "Open Hi-Hat", "Acoustic Snare", "Crash Cymbal",
                     "Hand Clap", "Hi Tom", "Hi Bongo", "Maracas", "Whistle", "Low Conga", "Cowbell", "Vibraslap",
@@ -228,7 +229,7 @@ public class BeatBox {
     private class SaveCfgListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFileChooser fileSave = new JFileChooser();
+            JFileChooser fileSave = new JFileChooser(currentDirectoryFolderPath);
             fileSave.showDialog(theFrame,"Save");
             saveBeats(fileSave.getSelectedFile());
         }
@@ -237,7 +238,7 @@ public class BeatBox {
     private class LoadCfgListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFileChooser fileLoad = new JFileChooser();
+            JFileChooser fileLoad = new JFileChooser(currentDirectoryFolderPath);
             fileLoad.showDialog(theFrame,"Open");
             loadBeat(fileLoad.getSelectedFile());
 
